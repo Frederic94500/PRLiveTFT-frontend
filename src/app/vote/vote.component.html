@@ -1,0 +1,20 @@
+<div class="vote-song centered-content">
+  <h2>{{ song.artist }} - {{ song.title }}</h2>
+  <iframe
+    width="560"
+    height="315"
+    [src]="song.url"
+    title="YouTube video player"
+    frameborder="0"
+    allow="clipboard-write; encrypted-media; picture-in-picture; web-share"
+    allowfullscreen
+  ></iframe>
+  <p>
+    <button
+      *ngFor="let number of numbers"
+      (click)="onCastVoteButtonClick(number)"
+    >
+      {{ number }}
+    </button>
+  </p>
+</div>
