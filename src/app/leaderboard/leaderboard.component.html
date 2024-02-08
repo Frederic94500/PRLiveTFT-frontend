@@ -1,0 +1,22 @@
+<div class="table table-striped centered-content" *ngIf="averageVotes">
+  <h2>Leaderboard</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Artist</th>
+        <th scope="col">Title</th>
+        <th scope="col">Number of votes</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let averageVote of averageVotes">
+        <td>{{ averageVote.artist }}</td>
+        <td>{{ averageVote.title }}</td>
+        <td>{{ averageVote.numberOfVotes }}</td>
+        <td>{{ averageVote.average }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
