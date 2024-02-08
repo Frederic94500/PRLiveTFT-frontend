@@ -14,7 +14,6 @@ import { SongModel } from '../models/song.model';
 })
 export class VoteComponent implements OnInit {
   numbers = Array.from({ length: 10 }, (_, i) => i + 1);
-  numb = 0;
   @Input() song!: SongModel;
 
   constructor(private sanitizer: DomSanitizer) {}
