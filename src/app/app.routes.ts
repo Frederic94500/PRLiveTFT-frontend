@@ -1,8 +1,21 @@
+import { NgModule, inject } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { ApiService } from './services/api.service';
+import { AuthGuard } from './guards/auth.guard';
+import { IndexComponent } from './index/index.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
-import { Routes } from '@angular/router';
+import { LoginRedirectComponent } from './login-redirect/login-redirect.component';
 import { VoteComponent } from './vote/vote.component';
 
 export const routes: Routes = [
-  { path: 'vote', component: VoteComponent },
+  { path: '', component: IndexComponent },
+  { path : 'login', component: LoginRedirectComponent},
+  {
+    path: 'vote',
+    canActivate: [() => inject(AuthGuard).canActivate()],
+    resolve: { data: () => inject(ApiService).getWhoAmI() },
+    component: VoteComponent,
+  },
   { path: 'leaderboard', component: LeaderboardComponent },
 ];

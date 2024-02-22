@@ -69,7 +69,7 @@ export class VoteComponent implements OnInit {
       });
       if (response.status === 403) {
         this.loggedIn = false;
-      } else {      
+      } else {
         this.loggedIn = true;
       }
     } catch (error) {
