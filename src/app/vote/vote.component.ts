@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SongModel } from '../models/song.model';
@@ -12,11 +13,11 @@ import { SongModel } from '../models/song.model';
   imports: [CommonModule],
 })
 export class VoteComponent implements OnInit {
-  loggedIn!: boolean;
+  apiService = new ApiService();
   numbers = Array.from({ length: 10 }, (_, i) => i + 1);
   allVoted!: boolean;
   selectSongs!: SongModel[];
-  song!: SongModel;
+  song!: SongModel | null;
 
   constructor(public sanitizer: DomSanitizer) {
     this.selectSongs = [];
@@ -29,51 +30,17 @@ export class VoteComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.isLogged();
-    if (!this.loggedIn) {
-      return;
-    }
-    fetch('http://localhost:5000/api/song/getnotvoted', {
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.selectSongs = data.data;
-      })
-      .catch((error) => {
+    this.apiService.getNotVoted().then((data) => {
+      if (data.length === 0) {
         this.allVoted = true;
-      });
-    fetch(`http://localhost:5000/api/song/get`, { credentials: 'include' })
-      .then((response) => response.json())
-      .then((data) => {
-        const tempSong = data.data;
-        const url = new URL(tempSong.url);
-        const params = new URLSearchParams(url.search);
-        const videoId = params.get('v');
-        this.song = {
-          _id: tempSong._id,
-          artist: tempSong.artist,
-          title: tempSong.title,
-          url: `https://www.youtube.com/embed/${videoId}`,
-        };
-      })
-      .catch((error) => {
-        this.allVoted = true;
-      });
-  }
-
-  async isLogged(): Promise<void> {
-    try {
-      const response = await fetch('http://localhost:5000/api/auth/whoami', {
-        credentials: 'include',
-      });
-      if (response.status === 403) {
-        this.loggedIn = false;
       } else {
-        this.loggedIn = true;
+        this.selectSongs = data;
       }
-    } catch (error) {
-      this.loggedIn = false;
+    });
+    if (!this.allVoted) {
+      this.apiService.getSong().then((data) => {
+        this.song = data;
+      });
     }
   }
 
@@ -94,17 +61,7 @@ export class VoteComponent implements OnInit {
 
   onCastVoteButtonClick(score: number): void {
     if (score >= 1 && score <= 10) {
-      fetch(`http://localhost:5000/api/vote/cast`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          songId: this.song._id,
-          score: score,
-        }),
-      });
+      const response = this.apiService.castVote(this.song!._id, score);
       location.reload();
     }
   }

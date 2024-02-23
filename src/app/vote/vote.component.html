@@ -1,4 +1,8 @@
-<div class="centered-content" *ngIf="!allVoted && loggedIn">
+<div class="centered-content" *ngIf="allVoted">
+  <h2>You already vote all the musics!</h2>
+</div>
+
+<div class="centered-content" *ngIf="!allVoted">
   <div class="vote-select centered-content">
     <h2>Select a song to vote for</h2>
     <p>
@@ -12,12 +16,12 @@
   </div>
 
   <div class="vote-song centered-content">
-    <h2>{{ song.artist }} - {{ song.title }}</h2>
+    <h2>{{ song!.artist }} - {{ song!.title }}</h2>
     <p>
       <iframe
         width="560"
         height="315"
-        [src]="sanitizer.bypassSecurityTrustResourceUrl(song.url)"
+        [src]="sanitizer.bypassSecurityTrustResourceUrl(song!.url)"
         title="YouTube video player"
         frameborder="0"
         allow="clipboard-write; encrypted-media; picture-in-picture; web-share"
@@ -34,12 +38,4 @@
       </button>
     </p>
   </div>
-</div>
-
-<div class="centered-content" *ngIf="allVoted && loggedIn">
-  <h2>You already vote all the musics!</h2>
-</div>
-
-<div class="centered-content" *ngIf="!loggedIn">
-  <h2>You need to login to vote</h2>
 </div>
