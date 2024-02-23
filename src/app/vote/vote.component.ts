@@ -4,6 +4,7 @@ import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SongModel } from '../models/song.model';
+import { transformURL } from '../services/song.service';
 
 @Component({
   selector: 'app-vote',
@@ -30,17 +31,14 @@ export class VoteComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.apiService.getNotVoted().then((data) => {
-      if (data.length === 0) {
-        this.allVoted = true;
-      } else {
-        this.selectSongs = data;
-      }
-    });
+    this.selectSongs = await this.apiService.getNotVoted();
+    if (this.selectSongs.length === 0) {
+      this.allVoted = true;
+    }
     if (!this.allVoted) {
-      this.apiService.getSong().then((data) => {
-        this.song = data;
-      });
+      this.song = transformURL(
+        this.selectSongs[Math.floor(Math.random() * this.selectSongs.length)]
+      );
     }
   }
 
@@ -51,11 +49,7 @@ export class VoteComponent implements OnInit {
       (song) => song._id === selectedSongId
     );
     if (selectedSong) {
-      this.song = selectedSong;
-      const url = new URL(selectedSong.url);
-      const params = new URLSearchParams(url.search);
-      const videoId = params.get('v');
-      this.song.url = `https://www.youtube.com/embed/${videoId}`;
+      this.song = transformURL(selectedSong);
     }
   }
 
