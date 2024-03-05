@@ -2,6 +2,6 @@ export interface AverageVote {
   artist: string;
   title: string;
   average: number;
-  numberOfVotes: number;
+  nbVotes: number;
   url: string;
 }

@@ -3,19 +3,22 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Artist</th>
-        <th scope="col">Title</th>
-        <th scope="col">Number of votes</th>
-        <th scope="col">Score</th>
+        <th scope="col" sortable="artist" (sort)="onSort($event)">Artist</th>
+        <th scope="col" sortable="title" (sort)="onSort($event)">Title</th>
+        <th scope="col" sortable="nbVotes" (sort)="onSort($event)">
+          Number of votes
+        </th>
+        <th scope="col" sortable="average" (sort)="onSort($event)">Score</th>
+        <th scope="col">Video</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let averageVote of averageVotes">
         <td>{{ averageVote.artist }}</td>
         <td>{{ averageVote.title }}</td>
-        <td>{{ averageVote.numberOfVotes }}</td>
+        <td>{{ averageVote.nbVotes }}</td>
         <td>{{ averageVote.average }}</td>
+        <td><a href="{{ averageVote.url }}" target="_blank" rel="noopener noreferrer">YouTube</a></td>
       </tr>
     </tbody>
   </table>
