@@ -64,6 +64,7 @@ export class LeaderboardComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.averageVotes = await this.api.avgVote();
     this.defaultAverageVotes = this.averageVotes;
+    this.onSort({ column: 'average', direction: 'desc' });
   }
 
   @ViewChildren(NgbdSortableHeader) headers:

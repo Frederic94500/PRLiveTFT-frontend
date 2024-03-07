@@ -1,5 +1,5 @@
-<div class="table table-striped centered-content" *ngIf="averageVotes">
-  <h2>Leaderboard</h2>
+<div class="table table-striped centered-content margin" *ngIf="averageVotes">
+  <h2>Leaderboard TFT</h2>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -18,7 +18,14 @@
         <td>{{ averageVote.title }}</td>
         <td>{{ averageVote.nbVotes }}</td>
         <td>{{ averageVote.average }}</td>
-        <td><a href="{{ averageVote.url }}" target="_blank" rel="noopener noreferrer">YouTube</a></td>
+        <td>
+          <a
+            href="{{ averageVote.url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            >YouTube</a
+          >
+        </td>
       </tr>
     </tbody>
   </table>
