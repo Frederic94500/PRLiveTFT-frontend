@@ -10,12 +10,16 @@ import { VoteComponent } from './vote/vote.component';
 
 export const routes: Routes = [
   { path: '', component: IndexComponent },
-  { path : 'login', component: LoginRedirectComponent},
+  { path: 'login', component: LoginRedirectComponent },
   {
     path: 'vote',
     canActivate: [() => inject(AuthGuard).canActivate()],
-    resolve: { data: () => inject(ApiService).getWhoAmI() },
+    resolve: { data: () => inject(ApiService).getNotVoted() },
     component: VoteComponent,
   },
-  { path: 'leaderboard', component: LeaderboardComponent },
+  {
+    path: 'leaderboard',
+    resolve: { data: () => inject(ApiService).avgVote() },
+    component: LeaderboardComponent,
+  },
 ];

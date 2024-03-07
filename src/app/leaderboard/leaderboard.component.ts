@@ -10,6 +10,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { AverageVote } from '../models/averageVote.model';
 
@@ -61,8 +62,10 @@ export class LeaderboardComponent implements OnInit {
   @Input() averageVotes!: AverageVote[];
   defaultAverageVotes: AverageVote[] = [];
 
+  constructor(private route: ActivatedRoute) {}
+
   async ngOnInit(): Promise<void> {
-    this.averageVotes = await this.api.avgVote();
+    this.averageVotes = this.route.snapshot.data['data'];
     this.defaultAverageVotes = this.averageVotes;
     this.onSort({ column: 'average', direction: 'desc' });
   }
@@ -73,7 +76,7 @@ export class LeaderboardComponent implements OnInit {
 
   onSort({ column, direction }: SortEvent) {
     // resetting other headers
-    for (const header of this.headers!) {
+    for (const header of this.headers || []) {
       if (header.sortable !== column) {
         header.direction = '';
       }

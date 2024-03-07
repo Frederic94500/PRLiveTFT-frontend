@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -20,7 +21,7 @@ export class VoteComponent implements OnInit {
   selectSongs!: SongModel[];
   song!: SongModel | null;
 
-  constructor(public sanitizer: DomSanitizer) {
+  constructor(public sanitizer: DomSanitizer, private route: ActivatedRoute) {
     this.selectSongs = [];
     this.song = {
       _id: '',
@@ -31,7 +32,7 @@ export class VoteComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.selectSongs = await this.apiService.getNotVoted();
+    this.selectSongs = this.route.snapshot.data['data'];
     if (this.selectSongs.length === 0) {
       this.allVoted = true;
     }
