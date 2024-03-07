@@ -1,5 +1,6 @@
 import { AverageVote } from '../models/averageVote.model';
 import { Injectable } from '@angular/core';
+import { UserModel } from '../models/user.model';
 
 @Injectable()
 export class ApiService {
@@ -36,9 +37,14 @@ export class ApiService {
   }
 
   public async avgVote(): Promise<AverageVote[]> {
-    const response = await fetch(`${this.api}/vote/avg`, {
-    });
+    const response = await fetch(`${this.api}/vote/avg`, {});
     const data = await response.json();
     return JSON.parse(data.data);
+  }
+
+  public async getUsers(): Promise<UserModel[]> {
+    const response = await fetch(`${this.api}/user/getusers`, {});
+    const data = await response.json();
+    return data.data;
   }
 }

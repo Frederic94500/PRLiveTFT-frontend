@@ -1,0 +1,19 @@
+<div class="table table-striped centered-content" *ngIf="users">
+  <h2>Leaderboard Users</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
+        <th scope="col" sortable="countVote" (sort)="onSort($event)">Vote Count</th>
+        <th scope="col" sortable="avgVote" (sort)="onSort($event)">Average Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.username }}</td>
+        <td>{{ user.countVote }}</td>
+        <td>{{ user.avgVote }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
