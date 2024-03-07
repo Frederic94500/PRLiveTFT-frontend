@@ -1,44 +1,11 @@
-import { Component, Directive, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { NgbdSortableHeader } from '../services/sort.service';
+import { SortEvent } from '../interfaces/sort.interface';
 import { UserModel } from '../models/user.model';
-
-export type SortColumn = keyof UserModel | '';
-export type SortDirection = 'asc' | 'desc' | '';
-const rotate: { [key: string]: SortDirection } = {
-  asc: 'desc',
-  desc: '',
-  '': 'asc',
-};
-
-export interface SortEvent {
-  column: SortColumn;
-  direction: SortDirection;
-}
-
-const compare = (v1: string | number, v2: string | number) =>
-  v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
-
-@Directive({
-  selector: 'th[sortable]',
-  standalone: true,
-  host: {
-    '[class.asc]': 'direction === "asc"',
-    '[class.desc]': 'direction === "desc"',
-    '(click)': 'rotate()',
-  },
-})
-export class NgbdSortableHeader {
-  @Input() sortable: SortColumn = '';
-  @Input() direction: SortDirection = '';
-  @Output() sort = new EventEmitter<SortEvent>();
-
-  rotate() {
-    this.direction = rotate[this.direction];
-    this.sort.emit({ column: this.sortable, direction: this.direction });
-  }
-}
+import { compare } from '../services/sort.service';
 
 @Component({
   selector: 'app-users',
@@ -75,7 +42,10 @@ export class UsersComponent implements OnInit {
       this.users = this.defaultUsers;
     } else {
       this.users = [...this.defaultUsers].sort((a, b) => {
-        const res = compare(a[column], b[column]);
+        const res = compare(
+          a[column as keyof UserModel],
+          b[column as keyof UserModel]
+        );
         return direction === 'asc' ? res : -res;
       });
     }

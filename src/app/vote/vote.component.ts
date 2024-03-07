@@ -21,17 +21,9 @@ export class VoteComponent implements OnInit {
   selectSongs!: SongModel[];
   song!: SongModel | null;
 
-  constructor(public sanitizer: DomSanitizer, private route: ActivatedRoute) {
-    this.selectSongs = [];
-    this.song = {
-      _id: '',
-      artist: '',
-      title: '',
-      url: '',
-    };
-  }
+  constructor(public sanitizer: DomSanitizer, private route: ActivatedRoute) {}
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.selectSongs = this.route.snapshot.data['data'];
     if (this.selectSongs.length === 0) {
       this.allVoted = true;

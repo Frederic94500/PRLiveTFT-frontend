@@ -1,54 +1,16 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
 import {
   Component,
-  Directive,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { NgbdSortableHeader, compare } from '../services/sort.service';
+import { SortColumn, SortEvent } from '../interfaces/sort.interface';
 
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../services/api.service';
-import { AverageVote } from '../models/averageVote.model';
-
-export type SortColumn = keyof AverageVote | '';
-export type SortDirection = 'asc' | 'desc' | '';
-const rotate: { [key: string]: SortDirection } = {
-  asc: 'desc',
-  desc: '',
-  '': 'asc',
-};
-
-const compare = (v1: string | number, v2: string | number) =>
-  v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
-
-export interface SortEvent {
-  column: SortColumn;
-  direction: SortDirection;
-}
-
-@Directive({
-  selector: 'th[sortable]',
-  standalone: true,
-  host: {
-    '[class.asc]': 'direction === "asc"',
-    '[class.desc]': 'direction === "desc"',
-    '(click)': 'rotate()',
-  },
-})
-export class NgbdSortableHeader {
-  @Input() sortable: SortColumn = '';
-  @Input() direction: SortDirection = '';
-  @Output() sort = new EventEmitter<SortEvent>();
-
-  rotate() {
-    this.direction = rotate[this.direction];
-    this.sort.emit({ column: this.sortable, direction: this.direction });
-  }
-}
+import { AverageVote } from '../interfaces/averageVote.interface';
 
 @Component({
   selector: 'app-leaderboard',
@@ -58,16 +20,15 @@ export class NgbdSortableHeader {
   styleUrl: './leaderboard.component.css',
 })
 export class LeaderboardComponent implements OnInit {
-  private api = new ApiService();
   @Input() averageVotes!: AverageVote[];
   defaultAverageVotes: AverageVote[] = [];
 
   constructor(private route: ActivatedRoute) {}
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.averageVotes = this.route.snapshot.data['data'];
     this.defaultAverageVotes = this.averageVotes;
-    this.onSort({ column: 'average', direction: 'desc' });
+    this.onSort({ column: 'average' as SortColumn, direction: 'desc' });
   }
 
   @ViewChildren(NgbdSortableHeader) headers:
@@ -87,7 +48,10 @@ export class LeaderboardComponent implements OnInit {
       this.averageVotes = this.defaultAverageVotes;
     } else {
       this.averageVotes = [...this.defaultAverageVotes].sort((a, b) => {
-        const res = compare(a[column], b[column]);
+        const res = compare(
+          a[column as keyof AverageVote],
+          b[column as keyof AverageVote]
+        );
         return direction === 'asc' ? res : -res;
       });
     }

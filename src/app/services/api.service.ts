@@ -1,4 +1,4 @@
-import { AverageVote } from '../models/averageVote.model';
+import { AverageVote } from '../interfaces/averageVote.interface';
 import { Injectable } from '@angular/core';
 import { UserModel } from '../models/user.model';
 
