@@ -15,5 +15,7 @@ ENV NODE_ENV production
 
 EXPOSE 4000
 
+RUN npm run build
+
 # Cmd script
-CMD ["npm", "run", "prod"]
+CMD ["npm", "run", "serve:ssr:PRLiveTFT-frontend"]
