@@ -4,7 +4,7 @@ import { UserModel } from '../models/user.model';
 
 @Injectable()
 export class ApiService {
-  private api = 'http://localhost:5000/api';
+  private api = 'https://prlivetft-api.frederic94500.net/api';
 
   public getWhoAmI() {
     return fetch(`${this.api}/auth/whoami`, {

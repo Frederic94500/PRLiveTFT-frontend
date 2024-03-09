@@ -24,10 +24,10 @@ export class NavbarComponent implements OnInit {
     this.apiService.getWhoAmI().then((response) => {
       if (response.status === 200) {
         this.msgButton = 'Logout';
-        this.link = 'http://localhost:5000/api/auth/logout';
+        this.link = 'https://prlivetft-api.frederic94500.net/api/auth/logout';
       } else {
         this.msgButton = 'Login';
-        this.link = 'http://localhost:5000/api/auth/discord/login';
+        this.link = 'https://prlivetft-api.frederic94500.net/api/auth/discord/login';
       }
     });
   }

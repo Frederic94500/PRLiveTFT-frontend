@@ -13,6 +13,6 @@ export class LoginRedirectComponent {
 
   ngOnInit(): void {
     this.document.location.href =
-      'http://localhost:5000/api/auth/discord/login';
+      'https://prlivetft-api.frederic94500.net/api/auth/discord/login';
   }
 }
