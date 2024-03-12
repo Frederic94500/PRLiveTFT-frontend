@@ -1,6 +1,6 @@
-import { AverageVote } from '../interfaces/averageVote.interface';
+import { AverageVote } from '@/interfaces/averageVote.interface';
 import { Injectable } from '@angular/core';
-import { UserModel } from '../models/user.model';
+import { UserModel } from '@/models/user.model';
 
 @Injectable()
 export class ApiService {

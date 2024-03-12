@@ -6,11 +6,11 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { NgbdSortableHeader, compare } from '../services/sort.service';
-import { SortColumn, SortEvent } from '../interfaces/sort.interface';
+import { NgbdSortableHeader, compare } from '@/services/sort.service';
+import { SortColumn, SortEvent } from '@/interfaces/sort.interface';
 
 import { ActivatedRoute } from '@angular/router';
-import { AverageVote } from '../interfaces/averageVote.interface';
+import { AverageVote } from '@/interfaces/averageVote.interface';
 
 @Component({
   selector: 'app-leaderboard',

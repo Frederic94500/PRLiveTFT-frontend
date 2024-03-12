@@ -1,5 +1,5 @@
 import { AverageVote } from './averageVote.interface';
-import { UserModel } from '../models/user.model';
+import { UserModel } from '@/models/user.model';
 
 export interface SortEvent {
   column: SortColumn;

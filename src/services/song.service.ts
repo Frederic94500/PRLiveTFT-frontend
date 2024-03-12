@@ -1,4 +1,4 @@
-import { SongModel } from '../models/song.model';
+import { SongModel } from '@/models/song.model';
 
 export const transformURL = (song: SongModel) => {
   const url = new URL(song.url);

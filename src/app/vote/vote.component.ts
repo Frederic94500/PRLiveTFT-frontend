@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '@/services/api.service';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SongModel } from '../models/song.model';
-import { transformURL } from '../services/song.service';
+import { SongModel } from '@/models/song.model';
+import { transformURL } from '@/services/song.service';
 
 @Component({
   selector: 'app-vote',

@@ -1,13 +1,12 @@
-import { NgModule, inject } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
-import { ApiService } from './services/api.service';
-import { AuthGuard } from './guards/auth.guard';
+import { ApiService } from '@/services/api.service';
+import { AuthGuard } from '@/guards/auth.guard';
 import { IndexComponent } from './index/index.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { LoginRedirectComponent } from './login-redirect/login-redirect.component';
+import { Routes } from '@angular/router';
 import { UsersComponent } from './users/users.component';
 import { VoteComponent } from './vote/vote.component';
+import { inject } from '@angular/core';
 
 export const routes: Routes = [
   { path: '', component: IndexComponent },

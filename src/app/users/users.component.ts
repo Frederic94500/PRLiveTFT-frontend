@@ -2,10 +2,10 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NgbdSortableHeader } from '../services/sort.service';
-import { SortEvent } from '../interfaces/sort.interface';
-import { UserModel } from '../models/user.model';
-import { compare } from '../services/sort.service';
+import { NgbdSortableHeader } from '@/services/sort.service';
+import { SortEvent } from '@/interfaces/sort.interface';
+import { UserModel } from '@/models/user.model';
+import { compare } from '@/services/sort.service';
 
 @Component({
   selector: 'app-users',

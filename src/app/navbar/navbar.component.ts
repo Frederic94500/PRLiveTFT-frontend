@@ -5,7 +5,7 @@ import {
   NgbNavModule,
 } from '@ng-bootstrap/ng-bootstrap';
 
-import { ApiService } from '../services/api.service';
+import { ApiService } from '@/services/api.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -27,7 +27,8 @@ export class NavbarComponent implements OnInit {
         this.link = 'https://prlivetft-api.frederic94500.net/api/auth/logout';
       } else {
         this.msgButton = 'Login';
-        this.link = 'https://prlivetft-api.frederic94500.net/api/auth/discord/login';
+        this.link =
+          'https://prlivetft-api.frederic94500.net/api/auth/discord/login';
       }
     });
   }
