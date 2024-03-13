@@ -21,15 +21,23 @@ export class NavbarComponent implements OnInit {
   link: string = '';
 
   ngOnInit(): void {
-    this.apiService.getWhoAmI().then((response) => {
-      if (response.status === 200) {
-        this.msgButton = 'Logout';
-        this.link = 'https://prlivetft-api.frederic94500.net/api/auth/logout';
-      } else {
+    this.apiService
+      .getWhoAmI()
+      .then((response) => {
+        if (response.code === 200) {
+          this.msgButton = 'Logout';
+          this.link = 'https://prlivetft-api.frederic94500.net/api/auth/logout';
+        } else {
+          this.msgButton = 'Login';
+          this.link =
+            'https://prlivetft-api.frederic94500.net/api/auth/discord/login';
+        }
+      })
+      .catch((error) => {
         this.msgButton = 'Login';
         this.link =
           'https://prlivetft-api.frederic94500.net/api/auth/discord/login';
-      }
-    });
+        console.log(error);
+      });
   }
 }

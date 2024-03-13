@@ -7,7 +7,7 @@ export class AuthGuard {
   constructor(private router: Router) {}
 
   async canActivate() {
-    if ((await new ApiService().getWhoAmI()).status !== 200) {
+    if ((await new ApiService().getWhoAmI()).code !== 200) {
       this.router.navigate(['/login']);
       return false;
     }

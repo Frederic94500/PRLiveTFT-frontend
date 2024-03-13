@@ -9,7 +9,11 @@ import { VoteComponent } from './vote/vote.component';
 import { inject } from '@angular/core';
 
 export const routes: Routes = [
-  { path: '', component: IndexComponent },
+  {
+    path: '',
+    resolve: { data: () => inject(ApiService).getWhoAmI },
+    component: IndexComponent,
+  },
   { path: 'login', component: LoginRedirectComponent },
   {
     path: 'vote',

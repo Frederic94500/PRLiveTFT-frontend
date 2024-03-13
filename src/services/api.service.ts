@@ -1,15 +1,17 @@
 import { AverageVote } from '@/interfaces/averageVote.interface';
 import { Injectable } from '@angular/core';
 import { UserModel } from '@/models/user.model';
+import { WhoAmI } from '@/interfaces/whoami.interface';
 
 @Injectable()
 export class ApiService {
   private api = 'https://prlivetft-api.frederic94500.net/api';
 
-  public getWhoAmI() {
-    return fetch(`${this.api}/auth/whoami`, {
+  public async getWhoAmI(): Promise<WhoAmI> {
+    const response = await fetch(`${this.api}/auth/whoami`, {
       credentials: 'include',
     });
+    return response.json();
   }
 
   public async getNotVoted() {
