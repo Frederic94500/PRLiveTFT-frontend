@@ -9,7 +9,7 @@ import { WhoAmI } from '@/interfaces/whoami.interface';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './index.component.html',
-  styleUrl: './index.component.css'
+  styleUrl: './index.component.css',
 })
 export class IndexComponent implements OnInit {
   text!: string;
@@ -19,12 +19,17 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     const data: WhoAmI = this.route.snapshot.data['data'];
-    if (data.code === 200 && typeof data.data === 'object') {
-      this.text = `Welcome ${data.data.username}`;
-      this.avatarUrl = `https://cdn.discordapp.com/avatars/${data.data.id}/${data.data.avatar}.png`;
+    if (data.code === 200) {
+      if (typeof data.data !== 'string') {
+        this.text = `Welcome ${data.data.username}`;
+        this.avatarUrl = `https://cdn.discordapp.com/avatars/${data.data.id}/${data.data.avatar}.png`;
+      } else {
+        this.text = 'To vote, please connect with Discord.';
+        this.avatarUrl = '';
+      }
     } else {
       this.text = 'To vote, please connect with Discord.';
-      this.avatarUrl = "";
+      this.avatarUrl = '';
     }
   }
 }
