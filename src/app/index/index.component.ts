@@ -19,14 +19,9 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     const data: WhoAmI = this.route.snapshot.data['data'];
-    if (data.code === 200) {
-      if (typeof data.data !== 'string') {
-        this.text = `Welcome ${data.data.username}`;
-        this.avatarUrl = `https://cdn.discordapp.com/avatars/${data.data.id}/${data.data.avatar}.png`;
-      } else {
-        this.text = 'To vote, please connect with Discord.';
-        this.avatarUrl = '';
-      }
+    if (data.data) {
+      this.text = `Welcome ${data.data.username}`;
+      this.avatarUrl = `https://cdn.discordapp.com/avatars/${data.data.id}/${data.data.avatar}.png`;
     } else {
       this.text = 'To vote, please connect with Discord.';
       this.avatarUrl = '';

@@ -6,5 +6,5 @@ export interface User {
 
 export interface WhoAmI {
   code: number;
-  data: User | string;
+  data: User | undefined;
 }
