@@ -62,7 +62,7 @@ export class VoteComponent implements OnInit {
   async onCastVoteButtonClick(score: number): Promise<void> {
     if (score >= 1 && score <= 10) {
       const response = await this.apiService.castVote(this.song!._id, score);
-      if (response.code === 200) {
+      if (response.code === 201) {
         this.snackBar.open(`${this.song?.title} voted!`, 'Close', {
           duration: 2000,
         });
