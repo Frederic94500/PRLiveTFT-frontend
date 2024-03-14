@@ -35,7 +35,7 @@ export class ApiService {
       }),
     });
     const data = await response.json();
-    return data.data;
+    return data;
   }
 
   public async avgVote(): Promise<AverageVote[]> {

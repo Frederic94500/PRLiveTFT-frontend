@@ -4,7 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '@/services/api.service';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SongModel } from '@/models/song.model';
+import { on } from 'events';
 import { transformURL } from '@/services/song.service';
 
 @Component({
@@ -21,10 +23,21 @@ export class VoteComponent implements OnInit {
   selectSongs!: SongModel[];
   song!: SongModel | null;
 
-  constructor(public sanitizer: DomSanitizer, private route: ActivatedRoute) {}
+  constructor(
+    public sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.selectSongs = this.route.snapshot.data['data'];
+    this.reset(true);
+  }
+
+  async reset(onInit: boolean): Promise<void> {
+    if (!onInit) {
+      this.selectSongs = await this.apiService.getNotVoted();
+    }
     if (this.selectSongs.length === 0) {
       this.allVoted = true;
     }
@@ -46,10 +59,17 @@ export class VoteComponent implements OnInit {
     }
   }
 
-  onCastVoteButtonClick(score: number): void {
+  async onCastVoteButtonClick(score: number): Promise<void> {
     if (score >= 1 && score <= 10) {
-      const response = this.apiService.castVote(this.song!._id, score);
-      // location.reload();
+      const response = await this.apiService.castVote(this.song!._id, score);
+      if (response.code === 200) {
+        this.snackBar.open(`${this.song?.title} voted!`, 'Close', {
+          duration: 2000,
+        });
+        this.reset(false);
+      } else {
+        this.snackBar.open('Error voting', 'Close', { duration: 2000 });
+      }
     }
   }
 }
