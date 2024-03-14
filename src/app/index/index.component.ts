@@ -17,8 +17,8 @@ export class IndexComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
-    const data: WhoAmI = this.route.snapshot.data['data'];
+  async ngOnInit(): Promise<void> {
+    const data: WhoAmI = await this.route.snapshot.data['data'];
     if (data.data) {
       this.text = `Welcome ${data.data.username}`;
       this.avatarUrl = `https://cdn.discordapp.com/avatars/${data.data.id}/${data.data.avatar}.png`;

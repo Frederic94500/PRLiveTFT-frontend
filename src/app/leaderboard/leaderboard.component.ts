@@ -43,7 +43,7 @@ export class LeaderboardComponent implements OnInit {
       }
     }
 
-    // sorting countries
+    // sorting songs
     if (direction === '' || column === '') {
       this.averageVotes = this.defaultAverageVotes;
     } else {

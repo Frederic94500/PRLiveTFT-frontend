@@ -17,7 +17,7 @@
         <td>{{ averageVote.artist }}</td>
         <td>{{ averageVote.title }}</td>
         <td>{{ averageVote.nbVotes }}</td>
-        <td>{{ averageVote.average }}</td>
+        <td>{{ averageVote.average | number:'1.2-2' }}</td>
         <td>
           <a
             href="{{ averageVote.url }}"

@@ -12,7 +12,7 @@
       <tr *ngFor="let user of users">
         <td>{{ user.username }}</td>
         <td>{{ user.countVote }}</td>
-        <td>{{ user.avgVote }}</td>
+        <td>{{ user.avgVote | number:'1.2-2' }}</td>
       </tr>
     </tbody>
   </table>
