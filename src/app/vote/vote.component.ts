@@ -49,7 +49,7 @@ export class VoteComponent implements OnInit {
   onCastVoteButtonClick(score: number): void {
     if (score >= 1 && score <= 10) {
       const response = this.apiService.castVote(this.song!._id, score);
-      location.reload();
+      // location.reload();
     }
   }
 }
