@@ -34,7 +34,6 @@ export class VoteComponent implements OnInit {
   }
 
   async reset(onReload: boolean): Promise<void> {
-    this.sortSongs();
     if (onReload) {
       this.selectSongs = await this.apiService.getNotVoted();
     }
@@ -45,6 +44,7 @@ export class VoteComponent implements OnInit {
       this.song = transformURL(
         this.selectSongs[Math.floor(Math.random() * this.selectSongs.length)]
       );
+      this.sortSongs();
     }
   }
 
