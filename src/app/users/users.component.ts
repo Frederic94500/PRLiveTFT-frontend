@@ -1,9 +1,9 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { SortColumn, SortEvent } from '@/interfaces/sort.interface';
 
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgbdSortableHeader } from '@/services/sort.service';
-import { SortEvent } from '@/interfaces/sort.interface';
 import { UserModel } from '@/models/user.model';
 import { compare } from '@/services/sort.service';
 
@@ -23,6 +23,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.users = this.route.snapshot.data['data'];
     this.defaultUsers = this.users;
+    this.onSort({ column: 'avgVote' as SortColumn, direction: 'desc' });
   }
 
   @ViewChildren(NgbdSortableHeader) headers:
@@ -37,7 +38,7 @@ export class UsersComponent implements OnInit {
       }
     }
 
-    // sorting countries
+    // sorting users
     if (direction === '' || column === '') {
       this.users = this.defaultUsers;
     } else {
