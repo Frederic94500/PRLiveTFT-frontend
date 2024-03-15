@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SongModel } from '@/models/song.model';
-import { on } from 'events';
 import { transformURL } from '@/services/song.service';
 
 @Component({
@@ -35,6 +34,7 @@ export class VoteComponent implements OnInit {
   }
 
   async reset(onReload: boolean): Promise<void> {
+    this.sortSongs();
     if (onReload) {
       this.selectSongs = await this.apiService.getNotVoted();
     }
@@ -61,7 +61,7 @@ export class VoteComponent implements OnInit {
 
   onRandomButtonClick(): void {
     this.reset(false);
-  }  
+  }
 
   async onCastVoteButtonClick(score: number): Promise<void> {
     if (score >= 1 && score <= 10) {
@@ -75,5 +75,11 @@ export class VoteComponent implements OnInit {
         this.snackBar.open('Error voting', 'Close', { duration: 2000 });
       }
     }
+  }
+
+  private sortSongs(): void {
+    this.selectSongs.sort((a, b) => {
+      return a.artist.localeCompare(b.artist);
+    });
   }
 }
