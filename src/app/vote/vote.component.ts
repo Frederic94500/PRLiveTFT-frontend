@@ -31,11 +31,11 @@ export class VoteComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectSongs = this.route.snapshot.data['data'];
-    this.reset(true);
+    this.reset(false);
   }
 
-  async reset(onInit: boolean): Promise<void> {
-    if (!onInit) {
+  async reset(onReload: boolean): Promise<void> {
+    if (onReload) {
       this.selectSongs = await this.apiService.getNotVoted();
     }
     if (this.selectSongs.length === 0) {
@@ -59,6 +59,10 @@ export class VoteComponent implements OnInit {
     }
   }
 
+  onRandomButtonClick(): void {
+    this.reset(false);
+  }  
+
   async onCastVoteButtonClick(score: number): Promise<void> {
     if (score >= 1 && score <= 10) {
       const response = await this.apiService.castVote(this.song!._id, score);
@@ -66,7 +70,7 @@ export class VoteComponent implements OnInit {
         this.snackBar.open(`${this.song?.title} voted!`, 'Close', {
           duration: 2000,
         });
-        this.reset(false);
+        this.reset(true);
       } else {
         this.snackBar.open('Error voting', 'Close', { duration: 2000 });
       }

@@ -3,9 +3,10 @@
 </div>
 
 <div class="centered-content" *ngIf="!allVoted">
-  <div class="vote-select centered-content">
+  <div class="vote-select">
     <h2>Select a song</h2>
     <p>
+      <button (click)="onRandomButtonClick()">Random song</button>
       <select (change)="onSongSelectChange($event)">
         <option value="">Select a song</option>
         <option *ngFor="let song of selectSongs" [value]="song._id">
@@ -15,7 +16,7 @@
     </p>
   </div>
 
-  <div class="vote-song centered-content">
+  <div class="vote-song">
     <h2>{{ song!.artist }} - {{ song!.title }}</h2>
     <p>
       <iframe
@@ -28,7 +29,7 @@
         allowfullscreen
       ></iframe>
     </p>
-    <h3>Vote</h3>
+    <h2>Vote</h2>
     <p>
       <button
         *ngFor="let number of numbers"
