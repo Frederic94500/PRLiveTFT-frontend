@@ -3,7 +3,7 @@
 </div>
 
 <div class="centered-content" *ngIf="!allVoted">
-  <div class="vote-select">
+  <div class="vote-select centered-content">
     <h2>Select a song</h2>
     <p>
       <button (click)="onRandomButtonClick()">Random song</button>
@@ -16,7 +16,7 @@
     </p>
   </div>
 
-  <div class="vote-song">
+  <div class="vote-song centered-content">
     <h2>{{ song!.artist }} - {{ song!.title }}</h2>
     <p>
       <iframe
